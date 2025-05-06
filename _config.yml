@@ -17,18 +17,27 @@ url                      : https://renjithknair2203.github.io # the base hostnam
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "renjithknair2203/renjithknair2203.github.io"
 
-# Site Author - The following control what appear as part of the author content on the side bar.
-#               If a field is blank the icon and link will not appear, otherwise it will be shown.
-#               Additional customization can be done by editing /_includes/author-profile.html
 author:
-  avatar: "images/1694025698282.jpeg"
   name: "Renjith Kumar Nair"
+  avatar: "images/1694025698282.jpeg"
   bio: "CompTIA Security+ certified cybersecurity enthusiast documenting my journey toward becoming a SOC Analyst and sharing insights from my learning path."
   location: "United Kingdom"
   employer: "Pharmanovia"
   email: "renjithknair2203@gmail.com"
   github: "renjithknair2203"
   linkedin: "renjith-k-nair"
+
+# authors data (make sure this section is in _data/authors.yml if needed)
+authors:
+  renjith:
+    name: "Renjith Kumar Nair"
+    avatar: "images/1694025698282.jpeg"
+    bio: "CompTIA Security+ certified cybersecurity enthusiast documenting my journey toward becoming a SOC Analyst and sharing insights from my learning path."
+    location: "United Kingdom"
+    employer: "Pharmanovia"
+    email: "renjithknair2203@gmail.com"
+    github: "renjithknair2203"
+    linkedin: "renjith-k-nair"
 
 
 
