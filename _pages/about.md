@@ -1,13 +1,13 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "👋🏽Hi Welcome! I’m Renjith."
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the repository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this template](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads!
+I am a Computer Science graduate with a strong foundation in technology and innovation. Currently, I am working as a Digital Transformation Graduate, where I assist in leveraging cutting-edge digital solutions to drive organizational growth. My passion for technology, particularly in cybersecurity, has inspired me to pursue a career as a SOC Analyst. With my background in IT and an ever-growing enthusiasm for security, I am focused on developing my skills to contribute to safeguarding critical infrastructure and responding to cyber threats.
 
 A data-driven personal website
 ======
