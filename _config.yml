@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Renjith Kumar Nair/ Site Title"
+title                    : "Renjith Kumar Nair"
 title_separator          : "-"
 name                     : &name "Renjith Kumar Nair"
 description              : &description "personal description"
