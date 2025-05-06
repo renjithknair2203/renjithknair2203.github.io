@@ -23,13 +23,13 @@ repository               : "renjithknair2203/renjithknair2203.github.io"
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : "Your Sidebar Name"
+  name             : "Renjith Kumar Nair"
   pronouns         : # example: "she/her"  
   bio              : "Short biography for the left-hand sidebar"
-  location         : "Earth"
-  employer         : "Red Brick University"
+  location         : "United Kingdom"
+  employer         : "Pharmanovia"
   uri              : # URL
-  email            : "none@example.org" 
+  email            : "renjithknair2203@gmail.com" 
 
   # Academic websites
   academia         : # URL
@@ -60,7 +60,7 @@ author:
   keybase          : # Username
   instagram        : # Username
   lastfm           : # Username
-  linkedin         : # Username
+  linkedin         : "https://www.linkedin.com/in/renjith-k-nair/"
   mastodon         : # URL
   medium           : # URL
   pinterest        : # Username
