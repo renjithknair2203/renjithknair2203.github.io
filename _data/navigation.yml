@@ -9,7 +9,7 @@
 
 main:
   - title: "CV"
-    url: /cv/
+    url: "Renjith Kumar Nair CV - Github.pdf"
     
   - title: "Projects"
     url: /portfolio/
