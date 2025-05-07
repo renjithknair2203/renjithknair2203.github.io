@@ -8,8 +8,8 @@
 #      Markdown formatted page while the second is generated using JSON.
 
 main:
-  - title: "CV"
-    url: /cv/
+  - title: CV
+    url: https://github.com/renjithknair2203/renjithknair2203.github.io/raw/master/files/Renjith%20Kumar%20Nair%20CV%20-%20Github.pdf
     
   - title: "Projects"
     url: /portfolio/
