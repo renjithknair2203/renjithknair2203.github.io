@@ -19,3 +19,5 @@ What you will find here?
 ======
 Here, you'll find a collection of work documenting my journey toward becoming a SOC Analyst. This includes hands-on labs, cybersecurity projects, and learning resources I've explored to build and strengthen my skill set. I use this space to share my progress, reflect on what I’ve learned, and demonstrate my growing experience in threat detection, incident response, and Blue Team operations.
 
+**“Security is not a product, but a process.” – Bruce Schneier**
+
