@@ -28,7 +28,7 @@ Reviewed the alert to gather initial information:
 - **Recipient:** lars@letsdefend.io  
 - **Action:** Allowed (email was delivered)
 
-![Alert Details](images/alert_details.png)
+![Alert Details](assets/Lab1/Picture%201.jpg))
 
 ---
 
