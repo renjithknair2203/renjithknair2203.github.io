@@ -34,7 +34,7 @@ Reviewed the alert to gather initial information:
 
 ### 2. Case Creation  
 Created and assigned a case for investigation. Initiated the playbook for structured analysis.  
-![Case Creation](Assets/Lab%201/Picture%201.png))
+![Case Creation](assets/Lab%201/Picture%201.png))
 
 ---
 
