@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renjith Kumar Nair — Security Lab Notebook</title>
+<meta name="description" content="Hands-on cyber security lab write-ups: SOC home labs, SIEM detection engineering, incident response and network security exercises.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="#labs">Labs</a>
+      <a href="#certifications">Certifications</a>
+      <a href="assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">status: actively applying · SOC Analyst / Incident Response</p>
+    <h1>Renjith Kumar Nair</h1>
+    <p class="lede">
+      Security+ certified, building hands-on SOC and incident-response experience through
+      home-lab work and structured practice — documented here the way I'd document a real
+      investigation: what happened, what I did, what I'd do differently.
+    </p>
+    <div class="meta-row">
+      <a class="pill solid" href="assets/files/CV.pdf">Download CV</a>
+      <a class="pill" href="https://www.linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a>
+      <a class="pill" href="mailto:you@example.com">Email</a>
+      <a class="pill" href="https://github.com/YOUR-GITHUB-USERNAME">GitHub</a>
+      <span class="pill">London, UK</span>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="labs">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Lab case files</h2>
+      <span class="count">16 logged</span>
+    </div>
+
+<div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="siem">SIEM</button>
+      <button class="filter-btn" data-filter="network">Network</button>
+      <button class="filter-btn" data-filter="forensics">Forensics</button>
+      <button class="filter-btn" data-filter="incident">Incident</button>
+    </div>
+
+    <a class="case" data-cat="incident" href="labs/phishing-email-investigation.html">
+      <div class="case-top">
+        <span class="case-id">Lab 1</span>
+        <span class="tag incident">Incident</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Phishing email investigation and endpoint containment</h3>
+      <p>Traced a macro-enabled Excel attachment to two malicious URLs, confirmed the user opened it, and contained the endpoint.</p>
+      <div class="stack"><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc165-sql-injection-payload.html">
+      <div class="case-top">
+        <span class="case-id">SOC165</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Possible SQL injection payload detected</h3>
+      <p>Investigated a tautology-based SQLi payload against a web server and closed the case as unsuccessful after confirming HTTP 500 responses.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc166-xss-requested-url.html">
+      <div class="case-top">
+        <span class="case-id">SOC166</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>JavaScript code detected in requested URL</h3>
+      <p>Analysed a reflected XSS attempt embedded in a URL parameter and assessed whether the payload executed.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc168-whoami-command-injection.html">
+      <div class="case-top">
+        <span class="case-id">SOC168</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Whoami command detected in request body</h3>
+      <p>Triaged a suspected OS command injection attempt carrying a whoami payload in the HTTP request body.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc167-ls-command-injection.html">
+      <div class="case-top">
+        <span class="case-id">SOC167</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>LS command detected in requested URL</h3>
+      <p>Validated whether an ls command embedded in a URL had executed on the target system and assessed impact.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc169-idor-attack.html">
+      <div class="case-top">
+        <span class="case-id">SOC169</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Possible IDOR attack detected</h3>
+      <p>Reviewed request patterns for an Insecure Direct Object Reference attempt and checked for unauthorised data access.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc170-lfi-attack.html">
+      <div class="case-top">
+        <span class="case-id">SOC170</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Passwd found in requested URL — possible LFI</h3>
+      <p>Examined an HTTP request referencing /etc/passwd for signs of a Local File Inclusion attempt.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="siem" href="labs/soc127-sql-injection-detected.html">
+      <div class="case-top">
+        <span class="case-id">SOC127</span>
+        <span class="tag siem">SIEM</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>SQL injection detected — sqlmap activity confirmed</h3>
+      <p>Decoded a multi-technique injection payload, correlated it with sqlmap's User-Agent and repeated probing, and contained the host.</p>
+      <div class="stack"><span>Cyberchef</span><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="forensics" href="labs/soc137-malicious-file-download.html">
+      <div class="case-top">
+        <span class="case-id">SOC137</span>
+        <span class="tag forensics">Forensics</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Malicious file / script download attempt</h3>
+      <p>Used file-hash reputation across VirusTotal and ANY.RUN to assess a blocked download and confirm no endpoint compromise.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span></div>
+    </a>
+
+    <a class="case" data-cat="forensics" href="labs/soc138-suspicious-xls-file.html">
+      <div class="case-top">
+        <span class="case-id">SOC138</span>
+        <span class="tag forensics">Forensics</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Suspicious macro-enabled Xls file detected</h3>
+      <p>Assessed a macro-enabled spreadsheet flagged by 48/66 vendors and traced its outbound requests to a known-malicious IP.</p>
+      <div class="stack"><span>SIEM</span><span>Virus Total</span><span>AbuseIPDB</span></div>
+    </a>
+
+    <a class="case" data-cat="network" href="labs/soc274-panos-cve-2024-3400.html">
+      <div class="case-top">
+        <span class="case-id">SOC274</span>
+        <span class="tag network">Network</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>PAN-OS command injection exploitation (CVE-2024-3400)</h3>
+      <p>Validated exploitation of an unauthenticated command injection flaw in a perimeter firewall and confirmed post-exploitation activity.</p>
+      <div class="stack"><span>NVD</span><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="network" href="labs/soc287-checkpoint-cve-2024-24919.html">
+      <div class="case-top">
+        <span class="case-id">SOC287</span>
+        <span class="tag network">Network</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Arbitrary file read on Checkpoint gateway (CVE-2024-24919)</h3>
+      <p>Investigated directory-traversal exploitation of an unauthenticated VPN gateway vulnerability and assessed data exposure.</p>
+      <div class="stack"><span>NVD</span><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="incident" href="labs/soc335-cve-2024-49138.html">
+      <div class="case-top">
+        <span class="case-id">SOC335</span>
+        <span class="tag incident">Incident</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>CVE-2024-49138 privilege escalation exploitation</h3>
+      <p>Correlated brute-force logins, privilege enumeration, and PowerShell activity to confirm SYSTEM-level compromise via a local privilege escalation flaw.</p>
+      <div class="stack"><span>NVD</span><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="incident" href="labs/soc336-windows-ole-cve-2025-21298.html">
+      <div class="case-top">
+        <span class="case-id">SOC336</span>
+        <span class="tag incident">Incident</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Windows OLE zero-click RCE via malicious RTF (CVE-2025-21298)</h3>
+      <p>Traced a malicious RTF email attachment through process-tree analysis to confirm remote code execution and living-off-the-land behaviour.</p>
+      <div class="stack"><span>NVD</span><span>Cisco Talos Intelligence</span><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="forensics" href="labs/soc338-lumma-stealer-dll-sideloading.html">
+      <div class="case-top">
+        <span class="case-id">SOC338</span>
+        <span class="tag forensics">Forensics</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>Lumma Stealer — DLL side-loading via ClickFix phishing</h3>
+      <p>Unpacked a ClickFix-style phishing lure that side-loaded a malicious DLL, confirming user interaction via endpoint browser history.</p>
+      <div class="stack"><span>Virus Total</span><span>SIEM</span></div>
+    </a>
+
+    <a class="case" data-cat="network" href="labs/soc342-sharepoint-toolshell.html">
+      <div class="case-top">
+        <span class="case-id">SOC342</span>
+        <span class="tag network">Network</span>
+        <span>LetsDefend</span>
+      </div>
+      <h3>SharePoint ToolShell auth bypass and RCE (CVE-2025-53770)</h3>
+      <p>Analysed exploitation of an unauthenticated deserialization flaw in on-prem SharePoint, including a decoded PowerShell web-shell payload.</p>
+      <div class="stack"><span>Virus Total</span><span>SIEM</span><span>NIST</span><span>CyberChef</span></div>
+    </a>
+
+
+  </div>
+</section>
+
+<section class="section" id="certifications">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Certifications &amp; training</h2>
+      <span class="count">update as you go</span>
+    </div>
+    <div class="cert-grid">
+      <div class="cert">
+        <div class="name">CompTIA Security+</div>
+        <div class="date">May 2025</div>
+      </div>
+      <div class="cert">
+        <div class="name">Google Cybersecurity Professional Certificate</div>
+        <div class="date">Jul 2026</div>
+      </div>
+      <div class="cert">
+        <div class="name">Let's Defend — SOC Analyst Learning Path</div>
+        <div class="date">Jan 2026</div>
+      </div>
+      <div class="cert">
+        <div class="name">SIEM 101</div>
+        <div class="date">2026</div>
+      </div>
+      <div class="cert">
+        <div class="name">Incident Handler — 2 (Work Ready Virtual Experience)</div>
+        <div class="date">2026</div>
+      </div>
+      <div class="cert">
+        <div class="name">CybSafe CCSA</div>
+        <div class="date">2026</div>
+      </div>
+      <div class="cert inprogress">
+        <div class="name">Cisco Networking Fundamentals Specialization</div>
+        <div class="date">2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <span>Built as a static GitHub Pages site — <a href="https://github.com/YOUR-GITHUB-USERNAME/YOUR-GITHUB-USERNAME.github.io">source</a></span>
+  </div>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cases = document.querySelectorAll('.case');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cases.forEach(c => {
+        c.classList.toggle('hidden', filter !== 'all' && c.dataset.cat !== filter);
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suspicious macro-enabled Xls file detected — Renjith Kumar Nair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="lab-header">
+  <div class="wrap">
+    <a class="back" href="../index.html">&larr; back to all labs</a>
+    <div class="ticket-meta">
+      <span><strong>Ticket</strong> SOC138</span>
+      <span><strong>Category</strong> Forensics</span>
+      <span><strong>Platform</strong> LetsDefend SOC Simulator</span>
+      <span><strong>Tools</strong> SIEM, Virus Total, AbuseIPDB</span>
+    </div>
+    <h1>Suspicious macro-enabled Xls file detected</h1>
+    <p class="summary">Assessed a macro-enabled spreadsheet flagged by 48/66 vendors and traced its outbound requests to a known-malicious IP.</p>
+  </div>
+</header>
+
+<article class="lab-body">
+  <div class="wrap">
+
+    <h2>Objective</h2>
+    <p>To investigate the suspicious .xls file detected by the SOC, determine whether it contains malicious macros or indicators of compromise (IOCs), analyze its behavior using dynamic and static analysis techniques, and assess if it poses a threat to the organization. Based on the findings, take appropriate remediation actions and document the incident to improve detection rules and future response.</p>
+
+    <h2>Investigation steps</h2>
+    <ol>
+      <li><p>Reviewed the alert to understand the nature, which shows the
+event took place on 13/03/21 at 20:20 where a suspicious file named
+ORDERSHEET &amp;SPEC.xlsm was detected on the source host of Sofia.
+Proceeded with the creation of the case.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc138-suspicious-xls-file/image1.png"/></p></li>
+      <li><p>Used the Log Management module to filter for the incident using
+the source address on the initial alert. However, could not find
+anything stating whether the malicious file was quarantined.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc138-suspicious-xls-file/image2.png"/></p></li>
+      <li><p>Navigated to the Endpoint Security module and searched for the
+user named Sofia, but even then could not find any information within
+the processes, network actions, terminal history and browser history
+stating the file was quarantined. Therefore assuming the file has not
+been quarantined due to lacking any sign of quarantine taking place.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc138-suspicious-xls-file/image3.png"/></p></li>
+      <li><p>VirusTotal was used to analyse the malicious excel file, which
+provided insight in the file being flagged as malicious with 48/66
+security vendors flagged this file as malicious and this file has
+several malicious behaviours embedded. Within the Behavior tab, we can
+see this file has twon network communication HTTP requests where one is
+not identified as malicious while the second one is flagged as malicious
+– phishing. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc138-suspicious-xls-file/image4.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc138-suspicious-xls-file/image5.png"/></p></li>
+    </ol>
+    <h2>Analysis</h2>
+    <p>On March 13, 2021, at 20:20, an alert titled SOC138 - Detected
+Suspicious Xls File was triggered, indicating that a suspicious
+macro-enabled Excel file (ORDERSHEET &SPEC.xlsm) was detected on the
+endpoint belonging to the user Sofia. Initial review in the SIEM
+confirmed the detection event, but follow-up investigation through log
+management and endpoint security tools did not reveal any indicators
+that the file had been quarantined. Static analysis via VirusTotal
+revealed a high threat score, with 48 out of 66 security vendors
+flagging the file as malicious. Additionally, dynamic behavior analysis
+uncovered that the file made two HTTP requests—one benign and another
+classified as phishing. The malicious HTTP request was directed to the
+IP 179.43.175.98, confirmed through log correlation. Threat intelligence
+validation using AbuseIPDB further reinforced the suspicion, as the IP
+had a history of malicious activity. These findings suggest that the
+Excel file likely served as a dropper or C2 beacon for phishing or other
+malicious payloads. As no automatic remediation was observed, it is
+assumed the file remained active post-detection. Appropriate remediation
+steps, including containment and rule tuning, were recommended to
+prevent future occurrences.</p>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <a href="../index.html">&larr; all labs</a>
+  </div>
+</footer>
+
+</body>
+</html>

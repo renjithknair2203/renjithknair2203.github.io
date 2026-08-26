@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malicious file / script download attempt — Renjith Kumar Nair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="lab-header">
+  <div class="wrap">
+    <a class="back" href="../index.html">&larr; back to all labs</a>
+    <div class="ticket-meta">
+      <span><strong>Ticket</strong> SOC137</span>
+      <span><strong>Category</strong> Forensics</span>
+      <span><strong>Platform</strong> LetsDefend SOC Simulator</span>
+      <span><strong>Tools</strong> SIEM, Virus Total</span>
+    </div>
+    <h1>Malicious file / script download attempt</h1>
+    <p class="summary">Used file-hash reputation across VirusTotal and ANY.RUN to assess a blocked download and confirm no endpoint compromise.</p>
+  </div>
+</header>
+
+<article class="lab-body">
+  <div class="wrap">
+
+    <h2>Objective</h2>
+    <p></p>
+
+    <h2>Investigation steps</h2>
+    <ol>
+      <li><p>Created the case for the alert SOC137 which took place on March
+14<sup>th</sup>, 2021.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image1.png"/></p></li>
+      <li><p>Started the playbook for the case to ensure standardised
+procedure is followed for investigation.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image2.png"/></p></li>
+      <li><p>Reviewed the alert in the monitoring section, where the source
+address was 172.16.17.37 and the file hash was provided along with
+details about the action taken, which in this case was blocked.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image3.png"/></p></li>
+      <li><p>Searched the file hash onto Virus Total where it was said to be
+flagged by 38/ 66 security vendors that this is malicious.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image4.png"/></p></li>
+      <li><p>Reviewed the category types that were commonly flagged by
+security vendors where Trojan was flagged the most.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image5.png"/></p></li>
+      <li><p>Reviewed the conclusion drawn by Crowdsourced AI where it stated
+the macro embedded in the file is malicious and attempts to execute a
+PowerShell command to a download a file from a remote location.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image6.png"/></p></li>
+      <li><p>Upon investigating further on the content in the scripts, we can
+see string obfuscation being used to bypass any identification of the
+code.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image7.png"/></p></li>
+      <li><p>Further investigating the purpose of the macro, we can see the
+macro is designed to download a payload using PowerShell from the
+specified URL:
+https://filetransfer.io/data-package/UR2whuBv/download.</p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image8.png"/></p></li>
+      <li><p>Navigating to the Log Management module and filtering by the
+source address, there was no logs found related to this case for Mar,
+14, 2021, 07:15 PM<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image9.png"/></p></li>
+      <li><p>Checked the end point security for the source address which
+belongs to Nicolas but found nothing suspicious in any of the analysis
+tab.</p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc137-malicious-file-download/image10.png"/></p></li>
+    </ol>
+    <h2>Analysis</h2>
+    <p>Alert SOC137 was triggered on March 14, 2021, when the endpoint
+NicolasPRD (172.16.17.37) attempted to download a malicious
+macro-enabled document titled INVOICE PACKAGE LINK TO DOWNLOAD.docm. The
+device blocked the action, and the file’s MD5 hash
+(f2d0c66b801244c059f636d08a474079) was analysed through VirusTotal,
+where it was flagged as malicious by 40 vendors and 5 sandboxes,
+predominantly classified as a Trojan. Further inspection showed that the
+document contained an obfuscated macro designed to execute PowerShell
+commands and download a secondary payload from
+https://filetransfer.io/data-package/UR2whuBv/download</p>
+    <p>, with related infrastructure linked to known malicious IPs. Sandbox
+analysis (ANY.RUN) confirmed the downloader behaviour and the presence
+of string obfuscation aimed at evading detection.</p>
+    <p>Follow-up investigations were performed in the Log Management and
+Endpoint Security modules to assess any impact on the host. No related
+logs, suspicious activity, or indicators of compromise were identified
+on NicolasPRD, suggesting that the malicious activity was successfully
+prevented before execution. The incident is confirmed as a genuine
+malware attempt, but containment was effective and no further compromise
+was detected.</p>
+    <h2>Key learnings</h2>
+    <ul>
+      <li>This lab reinforced the importance of following a structured and
+standardised investigation playbook when responding to potentially
+malicious file activity. By analysing the file hash through multiple
+intelligence sources such as VirusTotal, ANY.RUN, and crowdsourced AI
+tools, it became clear how reputation data and behavioural analysis work
+together to validate whether a file is truly malicious. The exercise
+also highlighted how attackers commonly use macro-enabled documents
+paired with obfuscated PowerShell commands to deliver payloads,
+emphasising the need for analysts to recognise indicators of maldocs,
+obfuscation patterns, and downloader behaviour.</li>
+      <li>Additionally, this investigation demonstrated the value of
+correlating alert data with endpoint telemetry and log sources to verify
+whether any malicious action was executed on the host. Even when an
+alert is blocked, confirming the absence of suspicious processes,
+connections, or persistence mechanisms is essential to ruling out
+compromise. Overall, the lab provided practical experience in threat
+verification, file analysis techniques, and validating containment
+through endpoint and log review—core skills required for effective SOC
+analyst work.</li>
+    </ul>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <a href="../index.html">&larr; all labs</a>
+  </div>
+</footer>
+
+</body>
+</html>
