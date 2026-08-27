@@ -364,7 +364,6 @@ footer a:hover { color: var(--amber); }
 
 .lab-body {
   padding: 44px 0 80px;
-  max-width: 760px;
 }
 .lab-body h2 {
   font-family: var(--font-display);
