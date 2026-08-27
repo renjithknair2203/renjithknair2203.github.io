@@ -33,12 +33,6 @@ html {
 body {
   margin: 0;
   background: var(--bg);
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-attachment: fixed;
-  background-position: -1px -1px;
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.6;
