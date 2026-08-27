@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing email investigation and endpoint containment — Renjith Kumar Nair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="lab-header">
+  <div class="wrap">
+    <a class="back" href="../index.html">&larr; back to all labs</a>
+    <div class="ticket-meta">
+      <span><strong>Ticket</strong> Lab 1</span>
+      <span><strong>Category</strong> Incident</span>
+      <span><strong>Platform</strong> LetsDefend SOC Simulator</span>
+      <span><strong>Completed</strong> Jan 2026</span>
+      <span><strong>Tools</strong> Virus Total, SIEM</span>
+    </div>
+    <h1>Phishing email investigation and endpoint containment</h1>
+    <p class="summary">Traced a macro-enabled Excel attachment to two malicious URLs, confirmed the user opened it, and contained the endpoint.</p>
+  </div>
+</header>
+
+<article class="lab-body">
+  <div class="wrap">
+
+    <h2>Objective</h2>
+    <p>The aim is to analyse an email and outline whether it is a phishing mail or not.</p>
+
+    <p>The analysis was conducted using the Windows Virtual Machine provided
+by LetsDefend, a cloud-based SOC training platform. This VM simulates a
+standard user workstation equipped with necessary tools for email
+analysis, such as Outlook, browser, and endpoint protection. It allows
+for a controlled and realistic environment to safely inspect suspicious
+emails, attachments, and links to determine if the email poses a
+legitimate threat.</p>
+
+    <h2>Investigation steps</h2>
+    <ol>
+      <li><p>Opened the investigation channel and reviewed the details of the
+alert to understand a bit more of its nature such as type, time/date of
+event, addresses etc. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image1.png"/></p></li>
+      <li><p>Created a case for the alert <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image2.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image3.png"/></p></li>
+      <li><p>Opened case management and started the playbook to understand the
+instructions of handling the case<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image4.png"/></p></li>
+      <li><p>Navigated into the Email Security and searched for the From
+address mentioned in the alert and narrowed down results <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image5.png"/></p></li>
+      <li><p>Reviewed the content of the email and identified the message was
+in bad English which is a potential indicator but cannot conclude
+anything from this. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image6.png"/></p></li>
+      <li><p>Navigated to VirusTotal and uploaded the Excel file which flagged
+by 39/61 vendors as malicious</p></li>
+      <li><p>Downloaded the attachment and unzipped the file which seems to
+contain a Excel file and two executable dll files.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image7.png"/></p></li>
+      <li><p>Navigated to VirusTotal and uploaded the Excel file, which was
+flagged by 39/61 vendors as malicious, but as the analysis was run 18
+days ago, I requested to reanalyse, and this produced the same results.
+Doing the same for the other two dll files, it becomes as malicious
+too.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image8.png"/></p></li>
+      <li><p>Found all the info needed from the alert itself in Monitoring,
+the email analysis conducted in Email Security, and using VirusTotal to
+analyse the file.</p><p>When was it sent? <strong>Jun, 13, 2021, 02:11 PM</strong></p><p>What is the email's SMTP address? <strong>24.213.228.54</strong></p><p>What is the sender address?
+<strong>trenton@tritowncomputers.com</strong></p><p>What is the recipient address?
+l<strong>ars@letsdefend.io</strong></p><p>Is the mail content suspicious? <strong>Yes</strong></p><p>Are there any attachment? <strong>Yes</strong></p></li>
+      <li><p>Within the playbook, selected Yes there was an attachment or URL
+as we could see a file attached to the email in the Email security
+module and confirmed the file is malicious.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image9.png"/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image10.png"/></p></li>
+      <li><p>As the next part of the playbook, to check if the mail was
+delivered, I entered the alert from the Monitoring module and reviewed
+the Action attribute, which specified allowed meaning it was
+delivered.</p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image11.png"/></p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image12.png"/></p></li>
+      <li><p>Deleted the email from the recipients inbox by clicking the
+delete button<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image13.png"/></p></li>
+      <li><p>The next stage of the playbook requires confirming if anyone has
+opened the malicious file/URL and to do this, navigated into the
+EndPoint Security and identified Lars device in the network to identify
+the IP address<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image14.png"/></p></li>
+      <li><p>Headed over to Log Management and searched for the IP address
+under source address searched for Lar’s IP address and we got two
+results from 13/06. With close inspection I can see the two URLs
+mentioned in the log match the URL that was related to the malicious
+Excel file we previously identified, confirm the malicious fie was
+accessed<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image15.png"/></p></li>
+      <li><p>Reviewed results and identified it was a HTTP request trigger by
+excel.exe. Having these URLs, going back to Virus Total I can see the
+two URLs mentioned in the log match the URL that was related to the
+malicious Excel file we previously identified, confirming user accessing
+the file.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image16.png"/></p></li>
+      <li><p>As the last stage of the playbook, to contain the endpoint, I
+navigated to Lar’s device in the Endpoint Security and selected Contain.
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/phishing-email-investigation/image17.png"/></p></li>
+    </ol>
+    <h2>Analysis</h2>
+    <p>During the investigation of a reported phishing incident, it was
+determined that the user had received a malicious email containing an
+Excel file attachment. Upon inspection, the Excel document was found to
+be macro-enabled, and the embedded VBA macros were configured to
+initiate HTTP requests to two known malicious URLs.</p>
+    <p>Log analysis and endpoint monitoring confirmed that the user opened
+the attachment, triggering the macros. As a result, network connections
+to the malicious sites were established, indicating successful execution
+of the payload. This led to a likely compromise of the user's
+device.</p>
+    <p>Given the severity of the incident, the affected device has been
+isolated from the network to prevent further propagation or data
+exfiltration. The device remains in containment while malware
+eradication and full forensic analysis are conducted to determine the
+extent of the compromise and ensure complete remediation.</p>
+    <h2>Key learnings</h2>
+    <ul>
+      <li>Gained hands-on experience in analyzing phishing incidents
+involving malicious email attachments, specifically Excel files with
+embedded VBA macros.</li>
+      <li>Learned how macro-enabled documents can be used to execute
+automated HTTP requests to external malicious servers, leading to
+endpoint compromise.</li>
+      <li>Strengthened log analysis and endpoint monitoring skills to
+confirm user interaction with the malicious file and detect outbound
+connections to threat actor infrastructure.</li>
+      <li>Understood the importance of immediate containment measures,
+including isolating infected devices to prevent lateral movement and
+data exfiltration.</li>
+      <li>Developed knowledge of incident response workflows, including
+malware eradication and forensic analysis to assess the full scope of
+compromise.</li>
+      <li>Recognized the critical role of user awareness and email security
+controls in preventing successful phishing-based attacks.</li>
+    </ul>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <a href="../index.html">&larr; all labs</a>
+  </div>
+</footer>
+
+</body>
+</html>

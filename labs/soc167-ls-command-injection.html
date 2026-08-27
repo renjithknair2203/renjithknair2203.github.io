@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LS command detected in requested URL — Renjith Kumar Nair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="lab-header">
+  <div class="wrap">
+    <a class="back" href="../index.html">&larr; back to all labs</a>
+    <div class="ticket-meta">
+      <span><strong>Ticket</strong> SOC167</span>
+      <span><strong>Category</strong> SIEM</span>
+      <span><strong>Platform</strong> LetsDefend SOC Simulator</span>
+      <span><strong>Completed</strong> Mar 2026</span>
+      <span><strong>Tools</strong> SIEM, Virus Total, AbuseIPDB</span>
+    </div>
+    <h1>LS command detected in requested URL</h1>
+    <p class="summary">Validated whether an ls command embedded in a URL had executed on the target system and assessed impact.</p>
+  </div>
+</header>
+
+<article class="lab-body">
+  <div class="wrap">
+
+    <h2>Objective</h2>
+    <p>To investigate a potential command injection attempt involving the use of the ls command detected within the requested URL, determine the intent and impact of the activity, validate whether the command was executed successfully on the target system, and apply appropriate containment and escalation procedures if necessary.</p>
+
+    <h2>Investigation steps</h2>
+    <ol>
+      <li><p>Open the alert and review the details in the alert, which
+outlines IP addresses involved, HTTP request method, trigger for alert
+and device action.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image1.png"/></p></li>
+      <li><p>Once reviewed alert, created a case for the alert and owned the
+case to run through the playbook.</p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image2.png"/></p></li>
+      <li><p>To identify which two devices are involved, I headed over to the
+endpoint security module and searched for both the source and
+destination IP address derived from the initial alert. From this we can
+see the source IP is an internal device and sending a request to an
+external device. Also, we can identify the user being Eliot and last
+login being 27/02/2022 at 12am which was around the time the incident
+took place.<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image3.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image4.png"/></p></li>
+      <li><p>Checked the destination IP address against Virus Total which
+appeared as non-malicious and likewise with the source IP address having
+a community score of 0. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image5.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image6.png"/></p></li>
+      <li><p>Gathering further info from AbuseIPDB, the destination IP seems
+to belong to a domain name of CloudFlare.com and country being Germany.
+However, the IP address looks to be clean with 0% confidence of abuse
+while having it reported 4 times over 2 years. The source IP address
+seems to be a private IP address as suggested by AbuseIPDB<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image7.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image8.png"/><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image9.png"/></p></li>
+      <li><p>Having the log filtered by destination IP of the alert, I was
+able to see multiple requests sent to this destination address, where
+one of the requests was sent on 25/01 by a different source IP and the
+remaining were all 27/02/2022 from the source IP in the alert. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image10.png"/></p></li>
+      <li><p>Upon reviewing the record in log management that matches the date
+and time in the alert, it seems like this particular request is not a
+threat other than accessing the letsdefend website and it contained a
+typical search parameter used in WordPress-based sites to search for
+posts containing the keyword "skills".<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image11.png"/></p></li>
+      <li><p>Although the triggered HTTP request seems harmless, it was worth
+reviewing all requests from the source to draw out the chances of
+malicious traffic in any of the other requests, but they also seemed
+clean without any signs of command injected to URL.</p></li>
+      <li><p>Closed the alert as concluded as false positive <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc167-ls-command-injection/image12.png"/></p></li>
+    </ol>
+    <h2>Analysis</h2>
+    <p>On February 27, 2022, at 12:36 AM, an alert titled "SOC167 - LS
+Command Detected in Requested URL" was triggered. The alert originated
+from a GET request sent by internal user Eliot (IP: 172.16.17.46) to an
+external destination IP address 188.114.96.15, which currently has no
+known malicious reputation according to AbuseIPDB and VirusTotal.</p>
+    <p>The request that triggered the alert was to the URL:</p>
+    <p>https://letsdefend.io/blog/?s=skills</p>
+    <p>Upon analysis, this URL is part of a legitimate blog search function
+on LetsDefend’s platform, with the query parameter s=skills being used
+to search for relevant blog content. The SIEM system appears to have
+falsely identified the presence of the string “ls” in the parameter as a
+potential command injection attempt.</p>
+    <p>Log review showed that multiple HTTP requests were made from Eliot’s
+system to the same destination, all of which were non-malicious and
+consistent with normal browsing behavior. Based on these findings, the
+alert has been confirmed as a false positive, and no further action is
+required.</p>
+    <h2>Key learnings</h2>
+    <ul>
+      <li>Developed Understanding of False Positives Learned how certain benign search parameters (e.g., s=skills) can
+be misinterpreted by security systems as potential command injection
+attempts, reinforcing the importance of contextual analysis.</li>
+      <li>Improved Log Analysis Skills Practiced reviewing HTTP request logs and user behavior to
+validate whether an alert was legitimate or a false positive.</li>
+      <li>Threat Intelligence Correlation Used tools like VirusTotal and AbuseIPDB to assess the reputation
+of external IP addresses and make informed decisions about whether a
+communication was malicious.</li>
+      <li>User Attribution and Internal Activity Validation Gained experience in tracing activity back to internal users (in
+this case, Eliot) and assessing whether the behavior aligns with normal
+usage patterns.</li>
+      <li>Refined Alert Triage Process Followed a structured approach to triage, investigate, and close
+alerts—ensuring accurate documentation and efficient incident
+handling.</li>
+      <li>Enhanced Decision-Making in Alert Resolution Strengthened ability to confidently close low-risk alerts based
+on multi-source evidence, reducing unnecessary escalations and
+optimizing SOC efficiency.</li>
+    </ul>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <a href="../index.html">&larr; all labs</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SharePoint ToolShell auth bypass and RCE (CVE-2025-53770) — Renjith Kumar Nair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="dot"></span>rknair · security-lab-notebook</a>
+    <nav>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../assets/files/CV.pdf">CV</a>
+    </nav>
+  </div>
+</div>
+
+<header class="lab-header">
+  <div class="wrap">
+    <a class="back" href="../index.html">&larr; back to all labs</a>
+    <div class="ticket-meta">
+      <span><strong>Ticket</strong> SOC342</span>
+      <span><strong>Category</strong> Network</span>
+      <span><strong>Platform</strong> LetsDefend SOC Simulator</span>
+      <span><strong>Completed</strong> Aug 2026</span>
+      <span><strong>Tools</strong> Virus Total, SIEM, NIST, CyberChef</span>
+    </div>
+    <h1>SharePoint ToolShell auth bypass and RCE (CVE-2025-53770)</h1>
+    <p class="summary">Analysed exploitation of an unauthenticated deserialization flaw in on-prem SharePoint, including a decoded PowerShell web-shell payload.</p>
+  </div>
+</header>
+
+<article class="lab-body">
+  <div class="wrap">
+
+    <h2>Objective</h2>
+    <p>Document the investigation and response to alert SOC342, which was triggered by the exploitation of CVE-2025-53770 (ToolShell) against an on-premises Microsoft SharePoint server</p>
+
+    <h2>Investigation steps</h2>
+    <ol>
+      <li><p>Reviewed the high level details of alert SOC342 and took
+ownership of the case for further investigation to be carried out.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image1.png"/></p><p><img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image2.png"/></p></li>
+      <li><p>The alert is transferred into the Investigation Channel, where I
+created the Case to follow playbook and mark whether this alert if a
+true or false positive.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image3.png"/><br/>
+<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image4.png"/></p></li>
+      <li><p>Reviewed the alert once again to understand the rule that was
+triggered and appears to be related to CVE-2025-53770. Conducting
+further research through NIST’s website, CVE-2025-53770 is a critical
+remote code execution (RCE) vulnerability affecting on-premises
+Microsoft SharePoint Server that was widely exploited in real-world
+attacks in mid-2025. It’s sometimes referred to as part of the
+“ToolShell” attack chain. It’s a deserialization of untrusted data
+vulnerability, meaning SharePoint could improperly process
+attacker-controlled serialized input and then run it, giving the
+attacker control of the server. The flaw allows an unauthenticated
+attacker to execute arbitrary code remotely over the network — no login
+required.<br/>
+<br/>
+It seems like the suspicious activity was targeting Microsoft
+SharePoint’s ToolPane.aspx endpoint using an unauthenticated POST
+request and this originated from a source IP of 107.191.58.76.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image5.png"/></p></li>
+      <li><p>Using the Log Management module, filtered log by source IP found
+from the alert. The following anomalies were identified upon reviewing
+the log:<br/>
+Spoofed Referer: Set to /layouts/SignOut.aspx to appear
+legitimate</p><p>Large Payload: 7699 bytes of encoded data (highly unusual)</p><p>No Authentication Headers: Exploiting a known bypass flaw<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image6.png"/></p></li>
+      <li><p>To progress further, I headed over to the Endpoint Security
+module and filtered for the SharePoint server using the Destination IP
+address. The results ended up providing insight of 4 commands being
+executed.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image7.png"/></p></li>
+      <li><p>The command executed launches PowerShell in hidden mode with no
+profile and executes a Base64-encoded payload. Once decoded with the
+help of Cyber Chef, it contains ASP.NET C# code that extracts the
+MachineKey configuration from an IIS server. That key material can be
+used to forge authentication cookies, making this a serious
+post-exploitation credential harvesting technique.<br/>
+<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image8.png"/><br/>
+<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image9.png"/></p></li>
+      <li><p>The second and third command shows the creation of a malicious
+ASPX file (spinstall0.aspx) directly in the SharePoint layouts
+directory. The embedment an &lt;object&gt; ActiveX tag that points to <a href="http://107.191.58.76/payload.exe">http://107.191.58.76/payload.exe</a>.
+This acts as a remote downloader when the page is visited by a browser
+or triggered internally.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image10.png"/><br/>
+<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image11.png"/></p></li>
+      <li><p>To verify the nature of the file, I identified the hash of the
+file (92bb4ddb98eeaf11fc15bb32e71d0a63256a0ed826a03ba293ce3a8bf057a514)
+under the Processes tab within Endpoint Security module and searched it
+in Virus Total. The results showed 40/62 security vendors identified
+this file as malicious with a common threat category of Trojan.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image12.png"/></p></li>
+      <li><p>To check if this is a planned test, I headed over to the Email
+Security module and searched for the keyword of ‘Planned’ which resulted
+in two emails but neither were relevant to this case as one was related
+to phishing and other was related to PentestMachine (Not the Sharepoint
+machine).<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image13.png"/></p></li>
+      <li><p>The attack was successful as the commands were executed
+successfully and web shell was created. Moreover, the alert shows the
+Device Action as allowed indicating the execution was allowed. <img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image14.png"/></p></li>
+      <li><p>As the attack was successful, the device is being contained to
+restrict the attacker from gaining further access to other devices in
+the network.<br/>
+<img alt="Screenshot from the LetsDefend investigation" src="../assets/img/soc342-sharepoint-toolshell/image15.png"/></p></li>
+    </ol>
+    <h2>Analysis</h2>
+    <p>Upon reviewing the alert details, the triggering rule was identified
+as being related to CVE-2025-53770, a critical remote code execution
+vulnerability affecting on-premises Microsoft SharePoint Server,
+commonly associated with the ToolShell attack chain. Further research
+via NIST confirmed this vulnerability allows unauthenticated attackers
+to execute arbitrary code through deserialization of untrusted data. The
+suspicious activity targeted SharePoint’s ToolPane.aspx endpoint via an
+unauthenticated POST request originating from 107.191.58.76. Log
+analysis revealed multiple anomalies including a spoofed Referer header
+(/layouts/SignOut.aspx), an unusually large encoded payload of 7,699
+bytes, and the absence of authentication headers, all consistent with
+exploitation of this vulnerability.</p>
+    <p>Further investigation within the Endpoint Security module revealed
+four commands executed on the SharePoint server. One command launched
+PowerShell in hidden mode with no profile and executed a Base64-encoded
+payload which, when decoded using CyberChef, contained ASP.NET C# code
+designed to extract the IIS MachineKey configuration. This represents a
+serious post-exploitation technique, as compromised MachineKeys can be
+used to forge authentication cookies and bypass security controls.
+Subsequent commands resulted in the creation of a malicious ASPX web
+shell (spinstall0.aspx) within the SharePoint layouts directory,
+embedding an ActiveX object that referenced
+http://107.191.58.76/payload.exe, acting as a remote downloader. The
+file’s SHA-256 hash was identified via the Endpoint Security Processes
+tab and analyzed using VirusTotal, where 40 out of 62 vendors classified
+it as a Trojan. No evidence of a planned test or authorized activity was
+found after reviewing Email Security logs. As the commands executed
+successfully and the alert indicated the actions were allowed, the
+attack was confirmed as successful. Consequently, the affected device
+was contained to prevent further lateral movement or continued attacker
+access.</p>
+    <h2>Key learnings</h2>
+    <ul>
+      <li>This investigation reinforced the importance of understanding how
+critical vulnerabilities such as CVE-2025-53770 (ToolShell) are actively
+exploited in real-world attacks. By correlating alert data with external
+threat intelligence and NIST documentation, it became clear how
+unauthenticated deserialization flaws in Microsoft SharePoint can lead
+directly to full remote code execution. The case highlighted the need to
+closely scrutinize web server logs for indicators such as spoofed HTTP
+headers, unusually large payload sizes, and the absence of
+authentication artifacts, all of which are strong signals of
+exploitation attempts against enterprise web applications.</li>
+      <li>Additionally, this investigation emphasized how attackers leverage
+living-off-the-land techniques and post-exploitation tradecraft to
+maintain access. The use of obfuscated PowerShell commands,
+Base64-encoded payloads, and malicious ASPX web shells demonstrates how
+legitimate system utilities can be abused to evade detection. Analysing
+endpoint telemetry and decoding payloads was critical in identifying
+credential-harvesting behaviour, specifically the extraction of IIS
+MachineKey values, which can enable authentication bypass. Finally, the
+case underscored the importance of containment actions once successful
+exploitation is confirmed, as timely isolation of the affected system is
+essential to preventing lateral movement and further compromise.</li>
+    </ul>
+
+  </div>
+</article>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Renjith Kumar Nair</span>
+    <a href="../index.html">&larr; all labs</a>
+  </div>
+</footer>
+
+</body>
+</html>
