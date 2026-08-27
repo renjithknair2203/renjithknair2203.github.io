@@ -495,6 +495,41 @@ footer a:hover { color: var(--amber); }
 }
 .callout strong { color: var(--green); }
 
+/* MITRE ATT&CK mapping table */
+.attack-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px 0 24px;
+  font-size: 14px;
+}
+.attack-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dimmer);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.attack-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #C6D0DA;
+  vertical-align: top;
+}
+.attack-table td:first-child { color: var(--text-dim); white-space: nowrap; }
+.attack-table code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--amber);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
 /* ============================================================
    Responsive
    ============================================================ */
