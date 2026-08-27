@@ -23,18 +23,23 @@
 </div>
 
 <header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">status: actively applying · SOC Analyst / Incident Response</p>
-    <h1>Renjith Kumar Nair</h1>
-    <p class="lede">
-      Security+ certified, building hands-on SOC and incident-response experience through
-      home-lab work and structured practice — documented here the way I'd document a real
-      investigation: what happened, what I did, what I'd do differently.
-    </p>
-    <div class="meta-row">
-      <a class="pill solid" href="assets/files/CV.pdf">Download CV</a>
-      <a class="pill" href="https://www.linkedin.com/in/renjith-k-nair">LinkedIn</a>
-      <a class="pill" href="https://mail.google.com/mail/?view=cm&fs=1&to=renjithknair2203@gmail.com" target="_blank" rel="noopener">Email</a>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">status: actively applying · SOC Analyst / Incident Response</p>
+      <h1>Renjith Kumar Nair</h1>
+      <p class="lede">
+        Security+ certified, building hands-on SOC and incident-response experience through
+        home-lab work and structured practice — documented here the way I'd document a real
+        investigation: what happened, what I did, what I'd do differently.
+      </p>
+      <div class="meta-row">
+        <a class="pill solid" href="assets/files/CV.pdf">Download CV</a>
+        <a class="pill" href="https://www.linkedin.com/in/renjith-k-nair">LinkedIn</a>
+        <a class="pill" href="https://mail.google.com/mail/?view=cm&fs=1&to=renjithknair2203@gmail.com" target="_blank" rel="noopener">Email</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/img/profile/headshot.jpg" alt="Renjith Kumar Nair">
     </div>
   </div>
 </header>
@@ -58,7 +63,7 @@
       <div class="case-top">
         <span class="case-id">Lab 1</span>
         <span class="tag incident">Incident</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jan 2026</span>
       </div>
       <h3>Phishing email investigation and endpoint containment</h3>
       <p>Traced a macro-enabled Excel attachment to two malicious URLs, confirmed the user opened it, and contained the endpoint.</p>
@@ -69,7 +74,7 @@
       <div class="case-top">
         <span class="case-id">SOC165</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jan 2026</span>
       </div>
       <h3>Possible SQL injection payload detected</h3>
       <p>Investigated a tautology-based SQLi payload against a web server and closed the case as unsuccessful after confirming HTTP 500 responses.</p>
@@ -80,7 +85,7 @@
       <div class="case-top">
         <span class="case-id">SOC166</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Feb 2026</span>
       </div>
       <h3>JavaScript code detected in requested URL</h3>
       <p>Analysed a reflected XSS attempt embedded in a URL parameter and assessed whether the payload executed.</p>
@@ -91,7 +96,7 @@
       <div class="case-top">
         <span class="case-id">SOC168</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Feb 2026</span>
       </div>
       <h3>Whoami command detected in request body</h3>
       <p>Triaged a suspected OS command injection attempt carrying a whoami payload in the HTTP request body.</p>
@@ -102,7 +107,7 @@
       <div class="case-top">
         <span class="case-id">SOC167</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Mar 2026</span>
       </div>
       <h3>LS command detected in requested URL</h3>
       <p>Validated whether an ls command embedded in a URL had executed on the target system and assessed impact.</p>
@@ -113,7 +118,7 @@
       <div class="case-top">
         <span class="case-id">SOC169</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Mar 2026</span>
       </div>
       <h3>Possible IDOR attack detected</h3>
       <p>Reviewed request patterns for an Insecure Direct Object Reference attempt and checked for unauthorised data access.</p>
@@ -124,7 +129,7 @@
       <div class="case-top">
         <span class="case-id">SOC170</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Apr 2026</span>
       </div>
       <h3>Passwd found in requested URL — possible LFI</h3>
       <p>Examined an HTTP request referencing /etc/passwd for signs of a Local File Inclusion attempt.</p>
@@ -135,7 +140,7 @@
       <div class="case-top">
         <span class="case-id">SOC127</span>
         <span class="tag siem">SIEM</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Apr 2026</span>
       </div>
       <h3>SQL injection detected — sqlmap activity confirmed</h3>
       <p>Decoded a multi-technique injection payload, correlated it with sqlmap's User-Agent and repeated probing, and contained the host.</p>
@@ -146,7 +151,7 @@
       <div class="case-top">
         <span class="case-id">SOC137</span>
         <span class="tag forensics">Forensics</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · May 2026</span>
       </div>
       <h3>Malicious file / script download attempt</h3>
       <p>Used file-hash reputation across VirusTotal and ANY.RUN to assess a blocked download and confirm no endpoint compromise.</p>
@@ -157,7 +162,7 @@
       <div class="case-top">
         <span class="case-id">SOC138</span>
         <span class="tag forensics">Forensics</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · May 2026</span>
       </div>
       <h3>Suspicious macro-enabled Xls file detected</h3>
       <p>Assessed a macro-enabled spreadsheet flagged by 48/66 vendors and traced its outbound requests to a known-malicious IP.</p>
@@ -168,7 +173,7 @@
       <div class="case-top">
         <span class="case-id">SOC274</span>
         <span class="tag network">Network</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jun 2026</span>
       </div>
       <h3>PAN-OS command injection exploitation (CVE-2024-3400)</h3>
       <p>Validated exploitation of an unauthenticated command injection flaw in a perimeter firewall and confirmed post-exploitation activity.</p>
@@ -179,7 +184,7 @@
       <div class="case-top">
         <span class="case-id">SOC287</span>
         <span class="tag network">Network</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jun 2026</span>
       </div>
       <h3>Arbitrary file read on Checkpoint gateway (CVE-2024-24919)</h3>
       <p>Investigated directory-traversal exploitation of an unauthenticated VPN gateway vulnerability and assessed data exposure.</p>
@@ -190,7 +195,7 @@
       <div class="case-top">
         <span class="case-id">SOC335</span>
         <span class="tag incident">Incident</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jul 2026</span>
       </div>
       <h3>CVE-2024-49138 privilege escalation exploitation</h3>
       <p>Correlated brute-force logins, privilege enumeration, and PowerShell activity to confirm SYSTEM-level compromise via a local privilege escalation flaw.</p>
@@ -201,7 +206,7 @@
       <div class="case-top">
         <span class="case-id">SOC336</span>
         <span class="tag incident">Incident</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Jul 2026</span>
       </div>
       <h3>Windows OLE zero-click RCE via malicious RTF (CVE-2025-21298)</h3>
       <p>Traced a malicious RTF email attachment through process-tree analysis to confirm remote code execution and living-off-the-land behaviour.</p>
@@ -212,7 +217,7 @@
       <div class="case-top">
         <span class="case-id">SOC338</span>
         <span class="tag forensics">Forensics</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Aug 2026</span>
       </div>
       <h3>Lumma Stealer — DLL side-loading via ClickFix phishing</h3>
       <p>Unpacked a ClickFix-style phishing lure that side-loaded a malicious DLL, confirming user interaction via endpoint browser history.</p>
@@ -223,7 +228,7 @@
       <div class="case-top">
         <span class="case-id">SOC342</span>
         <span class="tag network">Network</span>
-        <span>LetsDefend</span>
+        <span>LetsDefend · Aug 2026</span>
       </div>
       <h3>SharePoint ToolShell auth bypass and RCE (CVE-2025-53770)</h3>
       <p>Analysed exploitation of an unauthenticated deserialization flaw in on-prem SharePoint, including a decoded PowerShell web-shell payload.</p>
@@ -238,6 +243,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Certifications &amp; training</h2>
+      <span class="count">update as you go</span>
     </div>
     <div class="cert-grid">
       <div class="cert">
@@ -275,6 +281,7 @@
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
     <span>© 2026 Renjith Kumar Nair</span>
+    <span>Built as a static GitHub Pages site — <a href="https://github.com/renjithknair2203/renjithknair2203.github.io">source</a></span>
   </div>
 </footer>
 
