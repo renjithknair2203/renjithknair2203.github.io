@@ -176,6 +176,18 @@ exploitation is confirmed, as timely isolation of the affected system is
 essential to preventing lateral movement and further compromise.</li>
     </ul>
 
+    <h2>MITRE ATT&amp;CK mapping</h2>
+    <p>Mapping this investigation's confirmed activity to ATT&amp;CK tactics and techniques, based on what was actually observed in the logs and endpoint telemetry above:</p>
+    <table class="attack-table">
+      <tr><th>Tactic</th><th>Technique</th><th>Observed in this investigation</th></tr>
+      <tr><td>Initial Access</td><td><code>T1190</code> Exploit Public-Facing Application</td><td>Unauthenticated POST to SharePoint's ToolPane.aspx exploiting the CVE-2025-53770 deserialization flaw</td></tr>
+      <tr><td>Execution</td><td><code>T1059.001</code> PowerShell</td><td>Hidden-mode, no-profile PowerShell execution of a Base64-encoded payload</td></tr>
+      <tr><td>Persistence</td><td><code>T1505.003</code> Web Shell</td><td>Malicious ASPX web shell (<code>spinstall0.aspx</code>) dropped into the SharePoint layouts directory</td></tr>
+      <tr><td>Credential Access</td><td><code>T1552.001</code> Credentials In Files</td><td>Extraction of the IIS MachineKey configuration, usable to forge authentication cookies</td></tr>
+      <tr><td>Command &amp; Control</td><td><code>T1105</code> Ingress Tool Transfer</td><td>ActiveX object in the web shell referencing an external payload host for remote download</td></tr>
+      <tr><td>Defense Evasion</td><td><code>T1027</code> Obfuscated Files or Information</td><td>Base64-encoded PowerShell payload decoded via CyberChef during investigation</td></tr>
+    </table>
+
   </div>
 </article>
 
